@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="80sp"
         android:contentDescription="@string/my_image_description"
-        android:src="@drawable/my_image" />
+        android:src="@mipmap/ic_launcher" />
 
     <Button
         android:layout_width="160sp"
