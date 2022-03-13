@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/plain_text_input"
+        android:layout_width="match_parent"
+        android:layout_height="80sp"
+        android:autofillHints=""
+        android:hint="@string/editText"
+        android:inputType="text"
+        android:textSize="45sp" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="80sp"
+        android:contentDescription="@string/my_image_description"
+        android:src="@drawable/my_image" />
+
+    <Button
+        android:layout_width="160sp"
+        android:layout_height="80sp"
+        android:layout_gravity="center"
+        android:text="@string/buttonText"
+        android:textSize="25sp" />
+
+</LinearLayout>
