@@ -5,25 +5,25 @@
     android:orientation="vertical">
 
     <EditText
-        android:id="@+id/plain_text_input"
+        android:id="@+id/edTextInput"
         android:layout_width="match_parent"
-        android:layout_height="80sp"
-        android:autofillHints=""
+        android:layout_height="wrap_content"
+        android:importantForAutofill="no"
         android:hint="@string/editText"
-        android:inputType="text"
-        android:textSize="45sp" />
+        android:inputType="textEmailAddress"
+        android:textSize="@dimen/edt_text_size" />
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="80sp"
+        android:layout_height="@dimen/img_height"
         android:contentDescription="@string/my_image_description"
         android:src="@mipmap/ic_launcher" />
 
     <Button
-        android:layout_width="160sp"
-        android:layout_height="80sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="@string/buttonText"
-        android:textSize="25sp" />
+        android:textSize="@dimen/btn_text_size" />
 
 </LinearLayout>

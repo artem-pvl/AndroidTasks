@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="edt_text_size">44sp</dimen>
+    <dimen name="img_height">80dp</dimen>
+    <dimen name="btn_text_size">28sp</dimen>
+</resources>
