@@ -9,9 +9,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val buttonOK = findViewById<Button>(R.id.button_ok)
-        val onClick =
-            { Toast.makeText(applicationContext, "Нажата OK", Toast.LENGTH_SHORT).show() }
-        buttonOK.setOnClickListener { onClick() }
+        val buttonOK = findViewById<Button>(R.id.btnOK)
+        buttonOK.setOnClickListener {
+            Toast.makeText(
+                applicationContext,
+                "Нажата OK",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 }
