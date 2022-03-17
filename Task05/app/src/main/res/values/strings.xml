@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Task05</string>
+    <string name="btn_ok">OK</string>
+    <string name="edt_text_hint">Text to log</string>
+</resources>
