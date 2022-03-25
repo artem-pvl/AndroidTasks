@@ -14,13 +14,9 @@ class MainActivity : AppCompatActivity() {
         val btnOK = findViewById<Button>(R.id.btnOK)
         val edtText = findViewById<EditText>(R.id.edtText)
 
-        if (BuildConfig.DEBUG) {
-            Timber.plant(Timber.DebugTree())
-        }
-
         btnOK.setOnClickListener {
             val text = edtText.text.toString()
-            Timber.i(text)
+            Timber.d(text)
         }
     }
 }
