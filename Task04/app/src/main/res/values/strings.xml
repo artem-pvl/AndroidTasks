@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Task04</string>
+    <string name="buttonTextOK">OK</string>
+    <string name="btnClickMessage">Нажата OK</string>
+</resources>
