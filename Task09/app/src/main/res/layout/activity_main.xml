@@ -13,7 +13,7 @@
         android:autofillHints=""
         android:hint="@string/edt_text_hint"
         android:inputType="text"
-        android:text=""
+        android:text="@string/edt_text_initial"
         app:layout_constraintBottom_toTopOf="@+id/btnOk"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
