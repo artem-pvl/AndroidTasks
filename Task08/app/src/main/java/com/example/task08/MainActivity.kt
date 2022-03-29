@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
         val btnOk = findViewById<Button>(R.id.btnOk)
 
         btnOk.setOnClickListener{
-            txtView.text = "Нажата кнопка"
+            txtView.text = getString(R.string.txt_view_onclick_text)
         }
     }
 }
