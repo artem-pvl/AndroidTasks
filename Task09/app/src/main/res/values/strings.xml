@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Task 09</string>
+    <string name="edt_text_hint">Заполни меня</string>
+    <string name="chk_box_text">Добавить строку</string>
+    <string name="btn_text">Добавить текст</string>
+    <string name="txt_view_text" />
+    <string name="edt_text_initial" />
+</resources>
