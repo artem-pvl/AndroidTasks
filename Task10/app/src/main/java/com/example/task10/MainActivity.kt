@@ -2,15 +2,22 @@ package com.example.task10
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.task10.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-    lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(R.layout.activity_main)
+
+        initRecyclerView()
+    }
+
+    private fun initRecyclerView() {
         val colorList =
             listOf(
                 getString(R.string.color_white),
@@ -22,12 +29,9 @@ class MainActivity : AppCompatActivity() {
                 getString(R.string.color_fuchsin)
             )
 
-        val adapter = ColorAdapter(colorList)
-        setContentView(binding.root)
-
-        binding.apply {
-            rcView.layoutManager = GridLayoutManager(this@MainActivity, 3)
-            rcView.adapter = adapter
-        }
+        val rcView = findViewById<RecyclerView>(R.id.rcView)
+        rcView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        rcView.addItemDecoration(DividerItemDecoration(this, LinearLayoutManager.VERTICAL))
+        rcView.adapter = ColorAdapter(colorList)
     }
 }
