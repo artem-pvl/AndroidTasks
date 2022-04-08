@@ -8,15 +8,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
+    private val strList = listOf("1", "2", "3", "4", "five", "some text")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        recyclerViewInit()
+        initRecyclerView()
     }
 
-    private fun recyclerViewInit() {
-        val strList = listOf("1", "2", "3", "4", "five", "some text")
+    private fun initRecyclerView() {
         val rcView = findViewById<RecyclerView>(R.id.rvStrings)
         rcView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         rcView.addItemDecoration(DividerItemDecoration(this, LinearLayoutManager.VERTICAL))
