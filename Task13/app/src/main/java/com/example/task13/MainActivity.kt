@@ -17,24 +17,27 @@ class MainActivity : AppCompatActivity() {
             .url(getString(R.string.url_link))
             .build()
 
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: okio.IOException) {
-                e.printStackTrace()
-            }
+        client.newCall(request).enqueue(getDataCallback())
+    }
+}
 
-            override fun onResponse(call: Call, response: Response) {
-                response.use {
-                    if (!response.isSuccessful) throw okio.IOException("Unexpected code $response")
+private fun getDataCallback(): Callback {
+    return object : Callback {
+        override fun onFailure(call: Call, e: okio.IOException) {
+            e.printStackTrace()
+        }
 
+        override fun onResponse(call: Call, response: Response) {
+            response.use {
+                if (response.isSuccessful) {
                     for ((name, value) in response.headers) {
                         Timber.i("Response header $name: $value")
                     }
-
                     Timber.i("All body from response: \n${response.body!!.string()}")
+                } else {
+                    Timber.d("OkHTTP IO error")
                 }
             }
-        })
-
-        Timber.i("info log")
+        }
     }
 }
