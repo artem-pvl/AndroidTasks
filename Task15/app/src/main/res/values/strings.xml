@@ -2,5 +2,4 @@
     <string name="app_name">Task 15</string>
     <string name="btn_start_activity_text">Show image</string>
     <string name="milky_way_image">Image of \'Milky way\' galaxy</string>
-    <string name="image_url">https://bigpicture.ru/wp-content/uploads/2012/04/2184.jpg</string>
 </resources>
