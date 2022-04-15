@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
 private fun getDataCallback(): Callback {
     return object : Callback {
         override fun onFailure(call: Call, e: okio.IOException) {
-            e.printStackTrace()
+            Timber.e("Exception $e with call $call")
         }
 
         override fun onResponse(call: Call, response: Response) {
