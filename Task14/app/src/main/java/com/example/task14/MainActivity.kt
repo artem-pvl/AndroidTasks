@@ -12,10 +12,10 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        onBtnAddClick()
+        setListeners()
     }
 
-    private fun onBtnAddClick() {
+    private fun setListeners() {
         binding.btnAdd.setOnClickListener {
             binding.txtView.text = getString(R.string.text_on_btn_add_click)
         }
