@@ -3,7 +3,7 @@ package com.example.task13
 import android.app.Application
 import timber.log.Timber
 
-class Task13 : Application() {
+class App : Application() {
     override fun onCreate() {
         super.onCreate()
         if (BuildConfig.DEBUG) {
