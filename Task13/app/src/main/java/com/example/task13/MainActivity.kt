@@ -5,6 +5,8 @@ import android.os.Bundle
 import okhttp3.*
 import timber.log.Timber
 
+const val URL_FLICKR = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=ff49fcd4d4a08aa6aafb6ea3de826464&tags=cat&format=json&nojsoncallback=1"
+
 class MainActivity : AppCompatActivity() {
     private val client = OkHttpClient()
 
@@ -14,7 +16,7 @@ class MainActivity : AppCompatActivity() {
 
 
         val request = Request.Builder()
-            .url(getString(R.string.url_link))
+            .url(URL_FLICKR)
             .build()
 
         client.newCall(request).enqueue(getDataCallback())
