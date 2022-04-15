@@ -13,13 +13,17 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        onBtnStartClick()
+        setListeners()
     }
 
-    private fun onBtnStartClick() {
+    private fun setListeners() {
         binding.btnStartActivity.setOnClickListener {
-            val intent = Intent(this, ImageActivity::class.java)
-            startActivity(intent)
+            startImageActivity()
         }
+    }
+
+    private fun startImageActivity() {
+        val intent = Intent(this, ImageActivity::class.java)
+        startActivity(intent)
     }
 }
