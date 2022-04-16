@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="phone_book_element_txt_size">18sp</dimen>
+    <dimen name="phone_book_element_horizontal_margin">4dp</dimen>
+    <dimen name="text_right_margin">16dp</dimen>
+    <dimen name="lay_filter_margin">4dp</dimen>
+    <dimen name="phone_book_element_margin">4dp</dimen>
+    <dimen name="phone_book_element_padding">4dp</dimen>
+</resources>
