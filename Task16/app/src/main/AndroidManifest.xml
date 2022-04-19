@@ -14,8 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Task16">
         <activity
-            android:name=".FullSizeImage"
-            android:exported="false" />
+            android:name=".FullSizeImageActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".MainActivity"
             android:exported="true">

@@ -1,14 +1,23 @@
 package com.example.task16
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.recyclerview.widget.*
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.task16.databinding.ActivityMainBinding
 import com.google.gson.Gson
-import okhttp3.*
-import timber.log.Timber
 import java.io.IOException
+import java.time.LocalDateTime
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.Response
+import timber.log.Timber
 
 const val URL_FLICKR =
     "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=ff49fcd4d4a08aa6aafb6ea3de826464&tags=cat&format=json&nojsoncallback=1"
@@ -16,62 +25,66 @@ const val URL_FLICKR =
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val client = OkHttpClient()
-    private val adapter = ImageAdapter { fullSizeImageURL -> onItemClick(fullSizeImageURL) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        bindingRcView()
-        receiveImageList()
+        bindingRcView(emptyList())
+        receiveImages()
     }
 
-    private fun receiveImageList() {
-        val request = Request.Builder()
-            .url(URL_FLICKR)
-            .build()
-        client.newCall(request).enqueue(receiveDataCallback(this))
+    private fun receiveImages() {
+        val request = createRequest()
+        client.newCall(request).enqueue(responseCallback)
     }
 
-    private fun bindingRcView() {
-        binding.rcView.layoutManager = GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)
-        binding.rcView.addItemDecoration(DividerItemDecoration(this, LinearLayoutManager.VERTICAL))
-        binding.rcView.adapter = adapter
-    }
+    private val responseCallback = object : Callback {
+        override fun onFailure(call: Call, e: IOException) {
+            Timber.e(e)
+        }
 
-    private fun receiveDataCallback(currentActivity: AppCompatActivity): Callback {
-        return object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                e.printStackTrace()
-            }
-
-            override fun onResponse(call: Call, response: Response) {
-                response.use {
-                    val gson = Gson()
-                    val flickrImages =
-                        gson.fromJson(response.body!!.string(), FlickrImageList::class.java)
-
-                    val imageList = mutableListOf<ImageSource>()
-                    for (photo in flickrImages.photos.photo) {
-                        Timber.i("Image ID: ${photo.id}, image title: ${photo.title}")
-
-                        val imgSource = ImageSource()
-                        imgSource.getFromFlickrPhoto(photo)
-                        imageList.add(imgSource)
-                    }
-
-                    currentActivity.runOnUiThread {
-                        adapter.addImages(imageList)
-                    }
+        override fun onResponse(call: Call, response: Response) {
+            response.use {
+                val flickrImages = Gson().fromJson(response.body!!.string(), FlickrImageList::class.java)
+                val imageList = flickrImages.photos.photo.map {
+                    getFromFlickrPhoto(it)
+                }
+                val testList = flickrImages.photos.photo.map { it.toImageSource() }
+                runOnUiThread {
+                    bindingRcView(imageList)
                 }
             }
         }
     }
 
-    private fun onItemClick(imgUrl: String) {
-        val intent = Intent(this, FullSizeImage::class.java)
-        intent.putExtra("imgUrl", imgUrl)
+    private fun createRequest() = Request.Builder()
+        .url(URL_FLICKR)
+        .build()
+
+    private fun bindingRcView(imageList: List<ImageSource>) {
+        binding.rcView.layoutManager = GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)
+        binding.rcView.addItemDecoration(DividerItemDecoration(this, LinearLayoutManager.VERTICAL))
+        binding.rcView.adapter = ImageAdapter(images = imageList) {
+            starFullImageActivity(it)
+            showToast(it)
+        }
+    }
+
+    private fun starFullImageActivity(imgUrl: String) {
+        val intent = Intent(this, FullSizeImageActivity::class.java)
+        intent.putExtra(FullSizeImageActivity.PARAMETR_IMAGE, imgUrl)
         startActivity(intent)
     }
 }
+
+private fun FlickrImageList.Photos.Photo.toImageSource() = ImageSource(
+    urlLowRes = "https://farm${farm}.staticflickr.com/${server}/${id}_${secret}_m.jpg",
+    urlHiRes = "https://farm${farm}.staticflickr.com/${server}/${id}_${secret}_z.jpg",
+    description = title
+)
+
+fun AppCompatActivity.showToast(message: String) {
+    Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+}
+
