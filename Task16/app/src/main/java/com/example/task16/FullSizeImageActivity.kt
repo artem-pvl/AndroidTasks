@@ -9,7 +9,7 @@ class FullSizeImageActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFullSizeImageBinding
 
     companion object {
-        const val PARAMETR_IMAGE = "imgUrl"
+        const val PARAMETER_IMAGE = "imgUrl"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,11 +17,11 @@ class FullSizeImageActivity : AppCompatActivity() {
         binding = ActivityFullSizeImageBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        loadImage()
+        showImage()
     }
 
-    private fun loadImage() {
-        val imgUrl = intent.getStringExtra(PARAMETR_IMAGE)
+    private fun showImage() {
+        val imgUrl = intent.getStringExtra(PARAMETER_IMAGE)
         Glide.with(binding.root)
             .load(imgUrl)
             .into(binding.imgFullSizeView)
