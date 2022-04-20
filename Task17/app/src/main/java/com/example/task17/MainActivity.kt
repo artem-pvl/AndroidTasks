@@ -14,39 +14,31 @@ const val JSON_STRING =
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private val phoneList: List<PhoneRecord> = deSerializeJSON()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val recordList = deSerializeJSON()
-        val rcAdapter = initRcView(recordList)
-        filterPhoneBook(rcAdapter, recordList)
+        initRcView()
+        initPhoneBookFiltering()
     }
 
-    private fun filterPhoneBook(
-        rcAdapter: PhoneBookAdapter,
-        phoneList: MutableList<PhoneRecord>
-    ) {
+    private fun deSerializeJSON(): List<PhoneRecord> =
+        Gson().fromJson(JSON_STRING, object : TypeToken<List<PhoneRecord>>() {}.type)
+
+    private fun initRcView() {
+        binding.rcView.layoutManager =
+            LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+        binding.rcView.addItemDecoration(DividerItemDecoration(this, LinearLayoutManager.VERTICAL))
+        binding.rcView.adapter = PhoneBookAdapter(phoneList)
+    }
+
+    private fun initPhoneBookFiltering() {
         binding.btnFilter.setOnClickListener {
             val filterString = binding.edtFilter.text.toString()
-            rcAdapter.filterRecords(phoneList, filterString)
+            (binding.rcView.adapter as? PhoneBookAdapter)?.filterRecords(filterString)
         }
     }
-
-    private fun initRcView(phoneList: MutableList<PhoneRecord>): PhoneBookAdapter {
-        binding.rcView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-        binding.rcView.addItemDecoration(DividerItemDecoration(this, LinearLayoutManager.VERTICAL))
-        val rcAdapter = PhoneBookAdapter()
-        rcAdapter.addRecords(phoneList)
-        binding.rcView.adapter = rcAdapter
-        return rcAdapter
-    }
-
-    private fun deSerializeJSON(): MutableList<PhoneRecord> {
-        val typeToken = object : TypeToken<MutableList<PhoneRecord>>() {}.type
-        return Gson().fromJson(JSON_STRING, typeToken)
-    }
-
 }

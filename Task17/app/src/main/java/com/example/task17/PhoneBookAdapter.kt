@@ -3,17 +3,11 @@ package com.example.task17
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.SortedList
-import androidx.recyclerview.widget.SortedListAdapterCallback
 import com.example.task17.databinding.PhoneBookElementBinding
 
-class PhoneBookAdapter :
+class PhoneBookAdapter(private val phoneList: List<PhoneRecord>) :
     RecyclerView.Adapter<PhoneRecordHolder>() {
-
-    private val phoneBookList: SortedList<PhoneRecord> = SortedList(
-        PhoneRecord::class.java,
-        sortedListAdapterCallback()
-    )
+    private var filteredPhoneList = phoneList
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhoneRecordHolder {
         val binding = PhoneBookElementBinding
@@ -22,46 +16,14 @@ class PhoneBookAdapter :
     }
 
     override fun onBindViewHolder(holder: PhoneRecordHolder, position: Int) {
-        holder.bind(phoneBookList[position])
+        holder.bind(filteredPhoneList[position])
     }
 
-    override fun getItemCount(): Int = phoneBookList.size()
+    override fun getItemCount(): Int = filteredPhoneList.count()
 
-    private fun sortedListAdapterCallback() =
-        object : SortedListAdapterCallback<PhoneRecord>(this) {
-            override fun compare(
-                o1: PhoneRecord,
-                o2: PhoneRecord
-            ): Int {
-                return when {
-                    o1.name > o2.name -> 1
-                    o1.name < o2.name -> -1
-                    else -> 0
-                }
-            }
-
-            override fun areContentsTheSame(
-                oldItem: PhoneRecord,
-                newItem: PhoneRecord
-            ): Boolean = oldItem.hashCode() == newItem.hashCode()
-
-            override fun areItemsTheSame(
-                item1: PhoneRecord,
-                item2: PhoneRecord
-            ): Boolean = item1 == item2
-        }
-
-    fun addRecords(recordList: MutableList<PhoneRecord>) {
-        phoneBookList.addAll(recordList)
-    }
-
-    fun filterRecords(recordList: MutableList<PhoneRecord>, filter: String) {
-        phoneBookList.beginBatchedUpdates()
-        phoneBookList.clear()
-        for (record in recordList) {
-            if(record.hasSubSting(filter)) phoneBookList.add(record)
-        }
-        phoneBookList.endBatchedUpdates()
+    fun filterRecords(filter: String) {
+        filteredPhoneList = phoneList.filter { it.hasSubSting(filter) }
+        notifyDataSetChanged()
     }
 }
 
