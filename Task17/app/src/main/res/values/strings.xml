@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Task 17</string>
+    <string name="txt_name">Имя</string>
+    <string name="txt_phone_number">Телефон</string>
+    <string name="txt_type">Тип</string>
+    <string name="edit_text_hint">Строка поиска</string>
+    <string name="btn_filter_text">Искать</string>
+</resources>
