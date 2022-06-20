@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Task 14</string>
+    <string name="btn_add_text">Add text</string>
+    <string name="text_on_btn_add_click">Some text on button click</string>
+</resources>
